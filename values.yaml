@@ -1,8 +1,8 @@
 cronJob:
-  image: registry.access.redhat.com/ubi8:latest
+  image: registry.redhat.io/openshift4/ose-cli:latest
   restartPolicy: OnFailure # Optional
-  schedule: "*/1 * * * *"
+  schedule: "*/5 * * * *"
   serviceAccount: default # Optional
   script: |
     #!/bin/bash
-    echo 'Hello World!'
+    oc get pods
