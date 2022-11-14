@@ -1,0 +1,5 @@
+apiVersion: v2
+name: cronjob
+description: Dead simple CronJobs for Kubernetes
+type: application
+version: 1.0.0
