@@ -1,23 +1,16 @@
-# cronjob
+# openshift-auto-csr
 
-Dead simple CronJobs for Kubernetes.
+OpenShift manages internal TLS certificates and will automatically approve
+certificate signing requests (CSRs) under normal circumstances. If you
+frequently turn off your OpenShift cluster (lab, etc.), you'll quickly find
+that if a certificate expires while the cluster is powered off, OpenShift will
+**NOT** automatically renew that certificate. Instead, OpenShift will generate
+pending CSRs will hang indefinitely until manually approved with `oc adm
+cerficiate approve`.
 
-## Example
-
-```yaml
-cronJob:
-  image: registry.access.redhat.com/ubi8:latest
-  schedule: "*/1 * * * *"
-  script: |
-    #!/bin/bash
-    echo 'Hello World!'
-```
+This Helm chart deploys a CronJob that will check for any pending CSRs and
+automatically approve them every 5 minutes.
 
 ## How to Use
 
-* Fork this repo (or *"Use this Template"* in GitHub)
-* Replace variables in [values.yaml](values.yaml) with your own
-* Deploy to your cluster with:
-    * `$ helm install my-cronjob .`
-* If you want the straight k8s YAML so you can manually deploy it (or view it):
-    * `$ helm template --release-name my-cronjob .`
+* `helm install --namespace auto-csr --create-namespace auto-csr .`
