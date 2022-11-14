@@ -2,7 +2,9 @@ cronJob:
   image: registry.redhat.io/openshift4/ose-cli:latest
   restartPolicy: OnFailure # Optional
   schedule: "*/5 * * * *"
-  serviceAccount: default # Optional
+  serviceAccount: auto-csr # Optional
   script: |
     #!/bin/bash
-    oc get pods
+    oc get csr \
+      -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' \
+      | xargs oc adm certificate approve
