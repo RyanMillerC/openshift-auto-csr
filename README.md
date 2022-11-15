@@ -20,7 +20,9 @@ security implications of blindly approving pending CSRs. ⚠️**
 
 Deploy this on your cluster with:
 
-* `helm install --namespace auto-csr --create-namespace auto-csr .`
+```bash
+helm install --namespace auto-csr --create-namespace auto-csr .
+```
 
 You should now be able to power off the cluster, wait 3 months, and power it
 back on without any issues due to expired (internal) certificates. 😎
