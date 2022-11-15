@@ -1,10 +1,14 @@
 cronJob:
   image: registry.redhat.io/openshift4/ose-cli:latest
-  restartPolicy: OnFailure # Optional
+  restartPolicy: OnFailure
   schedule: "*/5 * * * *"
-  serviceAccount: auto-csr # Optional
+  serviceAccount: auto-csr
   script: |
     #!/bin/bash
-    oc get csr \
-      -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' \
-      | xargs oc adm certificate approve
+    GO_TEMPLATE='{{`{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}`}}'
+    PENDING_CSRS=$(oc get csr -o go-template="$GO_TEMPLATE")
+    if [[ -n $PENDING_CSRS ]] ; then
+      oc adm certificate approve $PENDING_CSRS
+    else
+      echo "Nothing to approve!"
+    fi
