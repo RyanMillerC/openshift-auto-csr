@@ -11,9 +11,10 @@ Instead, OpenShift will generate pending CSRs will hang indefinitely until
 manually approved with `oc adm cerficiate approve`.
 
 This Helm chart deploys a CronJob that will check for any pending CSRs and
-automatically approve them every 5 minutes. **This is only meant for lab (or
-similar environment) clusters due to the security implications of blindly
-approving pending CSRs.**
+automatically approve them every 5 minutes.
+
+**⚠️ This is only meant for lab (or similar environment) clusters due to the
+security implications of blindly approving pending CSRs. ⚠️**
 
 ## How to Use
 
