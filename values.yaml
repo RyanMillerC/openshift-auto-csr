@@ -6,9 +6,9 @@ cronJob:
   script: |
     #!/bin/bash
     GO_TEMPLATE='{{`{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}`}}'
-    PENDING_CSRS=$(oc get csr -o go-template="$GO_TEMPLATE")
+    PENDING_CSRS=$(oc --insecure-skip-tls-verify=true get csr -o go-template="$GO_TEMPLATE")
     if [[ -n $PENDING_CSRS ]] ; then
-      oc adm certificate approve $PENDING_CSRS
+      oc --insecure-skip-tls-verify=true adm certificate approve $PENDING_CSRS
     else
       echo "Nothing to approve!"
     fi
