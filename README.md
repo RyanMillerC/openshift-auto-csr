@@ -1,6 +1,6 @@
 # openshift-auto-csr
 
-## This is an experiment that failed because if the certificates on nodes are expired, new workloads (Jobs!) can't be scheduled... So don't this! Because it won't work. 🥲
+## This is an experiment that failed because if the certificates on nodes are expired, new workloads (Jobs!) can't be scheduled... So **don't use this!** Because it won't work. 🥲
 
 OpenShift manages internal TLS certificates and will automatically approve
 certificate signing requests (CSRs) under normal circumstances.
